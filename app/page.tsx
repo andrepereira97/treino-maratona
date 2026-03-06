@@ -61,7 +61,23 @@ const weeks = [
 ];
 
 export default function Home() {
-    const [selectedWeek, setSelectedWeek] = useState(null);
+    // Defina o tipo da semana
+    type Week = {
+      name: string;
+      days: {
+        Segunda: string;
+        Terça: string;
+        Quarta: string;
+        Quinta: string;
+        Sexta: string;
+        Sábado: string;
+        Domingo: string;
+      };
+      total: string;
+    };
+
+    // State tipado
+    const [selectedWeek, setSelectedWeek] = useState<Week | null>(null);
 
     const navButtonStyle = {
         display: 'block',
