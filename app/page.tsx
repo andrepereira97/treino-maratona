@@ -1,9 +1,21 @@
-"use client";
+// app/page.tsx
+'use client';
 
-// pages/index.js - Next.js com design moderno, minimalista e dark mode
-
-import Head from 'next/head';
 import { useState } from 'react';
+
+type Week = {
+  name: string;
+  days: {
+    Segunda: string;
+    Terça: string;
+    Quarta: string;
+    Quinta: string;
+    Sexta: string;
+    Sábado: string;
+    Domingo: string;
+  };
+  total: string;
+};
 
 const weeks = [
     // Semanas 1–4 (adaptação)
@@ -61,101 +73,168 @@ const weeks = [
 ];
 
 export default function Home() {
-    // Defina o tipo da semana
-    type Week = {
-      name: string;
-      days: {
-        Segunda: string;
-        Terça: string;
-        Quarta: string;
-        Quinta: string;
-        Sexta: string;
-        Sábado: string;
-        Domingo: string;
-      };
-      total: string;
-    };
+  const [selectedWeek, setSelectedWeek] = useState<Week | null>(null);
 
-    // State tipado
-    const [selectedWeek, setSelectedWeek] = useState<Week | null>(null);
+  return (
+    <div className="container">
+      <header className="header">
+        <h1>Plano de Treino Maratona 🏃‍♂️</h1>
 
-    const navButtonStyle = {
-        display: 'block',
-        width: '100%',
-        marginBottom: '8px',
-        padding: '10px',
-        background: '#1e1e1e',
-        border: '1px solid #444',
-        borderRadius: '6px',
-        fontWeight: 'bold',
-        color: '#eee',
-        cursor: 'pointer',
-        transition: 'all 0.2s'
-    };
+        <select
+          className="week-select"
+          value={selectedWeek?.name || ''}
+          onChange={(e) =>
+            setSelectedWeek(weeks.find((w) => w.name === e.target.value) || null)
+          }
+        >
+          <option value="">Selecione a semana</option>
+          {weeks.map((week) => (
+            <option key={week.name} value={week.name}>
+              {week.name}
+            </option>
+          ))}
+        </select>
+      </header>
 
-    return (
-        <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'Roboto, Arial, sans-serif', backgroundColor: '#121212', color: '#eee' }}>
-            <nav style={{ width: '260px', padding: '20px', borderRight: '1px solid #333', backgroundColor: '#1b1b1b' }}>
-                <h2 style={{ color: '#90caf9', marginBottom: '20px' }}>Semanas</h2>
-                {weeks.map((week, idx) => (
-                    <button key={idx} onClick={() => setSelectedWeek(week)} style={navButtonStyle}>
-                        {week.name}
-                    </button>
-                ))}
-            </nav>
-
-            <main style={{ flex: 1, padding: '25px', overflowY: 'auto' }}>
-                <Head>
-                    <title>Plano de Treino Maratona</title>
-                </Head>
-                <h1 style={{ color: '#90caf9' }}>Plano de Treino Maratona 🏃‍♂️</h1>
-
-                <div style={{ background: '#1e1e1e', padding: '15px', marginBottom: '20px', borderLeft: '4px solid #90caf9', borderRadius: '6px' }}>
-                    <h3 style={{ color: '#81c784' }}>Ritmos Guia</h3>
-                    <p><span style={{ backgroundColor: '#388e3c', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>Fácil:</span> 5:50–6:20/km | <span style={{ backgroundColor: '#388e3c', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>Longão:</span> 5:45–6:10/km | <span style={{ backgroundColor: '#388e3c', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>Ritmo maratona:</span> 5:20/km | Tempo: ~5:00/km | Séries: 4:20–4:40/km</p>
-                </div>
-
-                <div style={{ background: '#1b1b1b', padding: '15px', marginBottom: '20px', borderLeft: '4px solid #fbc02d', borderRadius: '6px' }}>
-                    <h3 style={{ color: '#fbc02d' }}>Segunda-feira – Força e potência (pernas + core)</h3>
-                    <p><strong>1️⃣ Aquecimento (5–10 min):</strong> Elíptico, passadeira ou bicicleta leve. Mobilidade: agachamentos sem peso, estocadas dinâmicas, rotações de tronco.</p>
-                    <p><strong>2️⃣ Pernas – principais:</strong> Agachamento livre 3×8–10 reps, Deadlift romeno 3×8–10 reps, Lunges com halteres 3×10 reps cada perna, Step-ups em banco 3×10 cada perna, Gémeos em pé 3×12–15 reps.</p>
-                    <p><strong>3️⃣ Core:</strong> Prancha frontal 3×45–60s, Prancha lateral 3×30–45s cada lado, Pallof press 3×10–12 reps, Glute bridge 3×12–15 reps.</p>
-                    <p><strong>Duração total:</strong> 40–50 min</p>
-
-                    <h3 style={{ color: '#fbc02d' }}>Sexta-feira – Estabilidade, core e resistência</h3>
-                    <p><strong>1️⃣ Aquecimento (5 min):</strong> Bicicleta ou corrida leve. Mobilidade articular (quadris, tornozelos).</p>
-                    <p><strong>2️⃣ Pernas / glúteos – estabilidade:</strong> Single-leg deadlift 3×8 reps cada perna, Hip thrust 3×12 reps, Monster walk 3×12 passos cada direção, Step-ups laterais 3×10 cada perna.</p>
-                    <p><strong>3️⃣ Core + equilíbrio:</strong> Prancha frontal com elevação alternada 3×30s, Russian twists 3×15–20 reps, Bird dog 3×12 reps cada lado, Dead bug 3×12 reps.</p>
-                    <p><strong>Duração total:</strong> 35–45 min</p>
-
-                    <p style={{ fontSize: '0.9em', color: '#aaa', marginTop: '15px', paddingTop: '10px', borderTop: '1px dashed #333' }}><strong>Notas importantes:</strong> Progressão: aumentar peso ou reps a cada 2–3 semanas mantendo boa forma. Prioridade: qualidade do movimento. Core: mantém postura de corrida, estabilidade pélvica e previne lesões. Alongamento/mobilidade: 5–10 min no final da sessão.</p>
-                </div>
-
-                {selectedWeek ? (
-                    <div>
-                        <h2 style={{ color: '#81c784' }}>{selectedWeek.name}</h2>
-                        <table style={{ borderCollapse: 'collapse', width: '100%', marginBottom: '20px', borderRadius: '6px', overflow: 'hidden', boxShadow: '0 2px 5px rgba(0,0,0,0.5)' }}>
-                            <thead>
-                                <tr>
-                                    <th style={{ backgroundColor: '#333', color: '#fff', padding: '10px' }}>Dia</th>
-                                    <th style={{ backgroundColor: '#333', color: '#fff', padding: '10px' }}>Treino</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.entries(selectedWeek.days).map(([day, training], idx) => (
-                                    <tr key={idx}>
-                                        <td style={{ padding: '10px', background: '#1e1e1e', border: '1px solid #444' }}>{day}</td>
-                                        <td style={{ padding: '10px', background: '#1e1e1e', border: '1px solid #444' }}>{training}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <p><strong>Total corrida:</strong> {selectedWeek.total}</p>
-                    </div>
-                ) : (
-                    <p>Selecione uma semana para ver o treino.</p>
-                )}
-            </main>
+      <main className="main">
+        {/* Ritmos guia */}
+        <div className="card">
+          <h2>Ritmos Guia</h2>
+          <p>
+            <strong>Fácil:</strong> 5:50–6:20/km |{' '}
+            <strong>Longão:</strong> 5:45–6:10/km |{' '}
+            <strong>Ritmo maratona:</strong> 5:20/km |{' '}
+            <strong>Tempo:</strong> ~5:00/km | <strong>Séries:</strong> 4:20–4:40/km
+          </p>
         </div>
-    );
+
+        {/* Treinos de ginásio */}
+        <div className="card">
+          <h2>Segunda-feira – Força e potência (pernas + core)</h2>
+          <p>
+            <strong>1️⃣ Aquecimento (5–10 min):</strong> Elíptico, passadeira ou bicicleta leve. Mobilidade: agachamentos sem peso, estocadas dinâmicas, rotações de tronco.
+          </p>
+          <p>
+            <strong>2️⃣ Pernas – principais:</strong> Agachamento livre 3×8–10 reps, Deadlift romeno 3×8–10 reps, Lunges com halteres 3×10 reps cada perna, Step-ups em banco 3×10 cada perna, Gémeos em pé 3×12–15 reps.
+          </p>
+          <p>
+            <strong>3️⃣ Core:</strong> Prancha frontal 3×45–60s, Prancha lateral 3×30–45s cada lado, Pallof press 3×10–12 reps, Glute bridge 3×12–15 reps.
+          </p>
+          <p>Duração total: 40–50 min</p>
+
+          <h2>Sexta-feira – Estabilidade, core e resistência</h2>
+          <p>
+            <strong>1️⃣ Aquecimento (5 min):</strong> Bicicleta ou corrida leve. Mobilidade articular (quadris, tornozelos).
+          </p>
+          <p>
+            <strong>2️⃣ Pernas / glúteos – estabilidade:</strong> Single-leg deadlift 3×8 reps cada perna, Hip thrust 3×12 reps, Monster walk 3×12 passos cada direção, Step-ups laterais 3×10 cada perna.
+          </p>
+          <p>
+            <strong>3️⃣ Core + equilíbrio:</strong> Prancha frontal com elevação alternada 3×30s, Russian twists 3×15–20 reps, Bird dog 3×12 reps cada lado, Dead bug 3×12 reps.
+          </p>
+          <p>Duração total: 35–45 min</p>
+
+          <p className="notes">
+            Notas importantes: Progressão: aumentar peso ou reps a cada 2–3 semanas mantendo boa forma. Prioridade: qualidade do movimento. Core: mantém postura de corrida, estabilidade pélvica e previne lesões. Alongamento/mobilidade: 5–10 min no final da sessão.
+          </p>
+        </div>
+
+        {/* Semana selecionada */}
+        {selectedWeek ? (
+          <div className="card">
+            <h2>{selectedWeek.name}</h2>
+            <table className="week-table">
+              <thead>
+                <tr>
+                  <th>Dia</th>
+                  <th>Treino</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(selectedWeek.days).map(([day, training]) => (
+                  <tr key={day}>
+                    <td>{day}</td>
+                    <td>{training}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p>Total corrida: {selectedWeek.total}</p>
+          </div>
+        ) : (
+          <p>Selecione uma semana para ver o treino.</p>
+        )}
+      </main>
+
+      <style jsx>{`
+        .container {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          background-color: #121212;
+          color: #eee;
+          font-family: 'Roboto', sans-serif;
+          padding: 0 10px;
+        }
+        .header {
+          padding: 15px 0;
+          text-align: center;
+        }
+        .week-select {
+          width: 100%;
+          padding: 10px;
+          font-size: 1rem;
+          margin-top: 10px;
+          border-radius: 6px;
+          border: 1px solid #444;
+          background-color: #1e1e1e;
+          color: #eee;
+        }
+        .main {
+          flex: 1;
+          padding: 15px 0;
+        }
+        .card {
+          background-color: #1b1b1b;
+          padding: 15px;
+          border-radius: 6px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+          margin-bottom: 20px;
+        }
+        .week-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 15px;
+        }
+        .week-table th,
+        .week-table td {
+          padding: 10px;
+          border: 1px solid #444;
+        }
+        .week-table th {
+          background-color: #333;
+        }
+        .notes {
+          font-size: 0.9rem;
+          color: #aaa;
+          margin-top: 10px;
+          border-top: 1px dashed #333;
+          padding-top: 10px;
+        }
+        @media (min-width: 768px) {
+          .container {
+            flex-direction: row;
+          }
+          .header {
+            width: 250px;
+            flex-shrink: 0;
+          }
+          .main {
+            flex: 1;
+            padding-left: 20px;
+          }
+        }
+      `}</style>
+    </div>
+  );
 }
