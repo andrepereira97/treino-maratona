@@ -19,7 +19,7 @@ type Week = {
 
 const weeks = [
     // Semanas 1–4 (adaptação)
-    { name: "Semana 1 (9–15 março)", days: {Segunda: "ginásio", Terça: "6 km fácil", Quarta: "2 km aquecer + 4×800 m (4:40/km) + 2 km relaxar → 8 km", Quinta: "natação", Sexta: "6 km fácil", Sábado: "10 km longão", Domingo: "enduro"}, total: "30 km" },
+    { name: "Semana 1 (9–15 março)", days: {Segunda: "ginásio", Terça: "99 km fácil", Quarta: "2 km aquecer + 4×800 m (4:40/km) + 2 km relaxar → 8 km", Quinta: "natação", Sexta: "6 km fácil", Sábado: "10 km longão", Domingo: "enduro"}, total: "30 km" },
     { name: "Semana 2", days: {Segunda: "ginásio", Terça: "8 km fácil", Quarta: "2 km + 5×800 m + 2 km → 9 km", Quinta: "natação", Sexta: "6 km fácil", Sábado: "12 km longão", Domingo: "enduro"}, total: "35 km" },
     { name: "Semana 3", days: {Segunda: "ginásio", Terça: "8 km fácil", Quarta: "2 km + 4 km tempo + 2 km → 8 km", Quinta: "natação", Sexta: "6 km fácil", Sábado: "14 km longão", Domingo: "enduro"}, total: "36 km" },
     { name: "Semana 4 (recuperação)", days: {Segunda: "ginásio", Terça: "6 km fácil", Quarta: "2 km + 6×200 m subida + 2 km → 7 km", Quinta: "natação", Sexta: "6 km fácil", Sábado: "10 km longão", Domingo: "enduro"}, total: "29 km" },
